@@ -99,10 +99,15 @@ public class HeartMisty extends Activity {
         @Override
         public void onDraw(Canvas canvas) {
             Bitmap _scratch = BitmapFactory.decodeResource(getResources(), R.drawable.grass);
+            Bitmap button = BitmapFactory.decodeResource(getResources(), R.drawable.button);
+            Bitmap dpad = BitmapFactory.decodeResource(getResources(), R.drawable.d_pad);
             canvas.drawColor(Color.BLACK);
-            java.util.Random randomGenerator = new java.util.Random();
+            //java.util.Random randomGenerator = new java.util.Random();
             //canvas.drawBitmap(_scratch, 0, 0, null);
             canvas.drawBitmap(_scratch, _x, _y, null);
+            canvas.drawBitmap(button, 410, 200, null);
+            canvas.drawBitmap(button, 350, 232, null);
+            canvas.drawBitmap(dpad, 10, 162, null);
             android.graphics.Paint paint = new android.graphics.Paint();
             paint.setColor(0xFFFF0000);
             /*
@@ -110,7 +115,7 @@ public class HeartMisty extends Activity {
             canvas.drawText(id, 0, id.length(), (float) 100.0, (float) 100.0, paint);
             */
             java.util.HashMap<Integer, Bitmap> tiles = new java.util.HashMap<Integer, Bitmap>();
-            for(int x = 0; x < map[x].length; x++) {
+            for(int x = 0; x < map.length; x++) {
                 for(int y = 0; y < map[x].length; y++) {
                     int tileId = map[x][y];
                     Bitmap tile;
@@ -134,7 +139,11 @@ public class HeartMisty extends Activity {
             }
             frames++; 
             canvas.drawText(fps, 0, fps.length(), (float) 200.0, (float) 100.0, paint);
-            canvas.drawText(log.toString(), 0, log.length(), (float) 200.0, (float) 200.0, paint);
+            //canvas.drawText(log.toString(), 0, log.length(), (float) 200.0, (float) 200.0, paint);
+            
+            String dimensions = Integer.toString(canvas.getWidth());
+            dimensions += "x" + Integer.toString(canvas.getHeight());
+            canvas.drawText(dimensions.toString(), 0, dimensions.length(), (float) 200.0, (float) 200.0, paint);
         }
         
         @Override
@@ -143,14 +152,17 @@ public class HeartMisty extends Activity {
             _y = (int) event.getY();
             log = new StringBuilder("");
             for (int i = 0; i < event.getPointerCount(); i++) {
-              log.append("#" ).append(i);
-              log.append("(pid " ).append(event.getPointerId(i));
-              log.append(")=" ).append((int) event.getX(i));
-              log.append("," ).append((int) event.getY(i));
-              if (i + 1 < event.getPointerCount()) {
-                 log.append(";" );
-             }
-           }
+                log.append("#" ).append(i);
+                log.append("(pid " ).append(event.getPointerId(i));
+                log.append(")=" ).append((int) event.getX(i));
+                log.append("," ).append((int) event.getY(i));
+                if (i + 1 < event.getPointerCount()) {
+                    log.append(";" );
+                }
+            }
+            //-- Vibrator???
+        	// android.os.Vibrator v = (android.os.Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        	// v.vibrate(10);
             return true;
         }
  
